@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lista de tarefas simples: adicione, conclua, edite e remova tarefas.">
+  <title>Lista de tarefas</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head> 
+<body>
+  <main class="app">
+    <header class="app__header">
+      <h1 class="app__title">Minhas tarefas</h1>
+      <p class="app__subtitle">Anote, conclua e siga em frente.</p>
+    </header>
+
+    <form id="task-form" class="task-form" autocomplete="off" novalidate>
+      <label for="task-input" class="visually-hidden">Nova tarefa</label>
+      <input
+        id="task-input"
+        class="task-form__input"
+        type="text"
+        name="task"
+        placeholder="O que precisa ser feito?"
+        maxlength="120"
+        aria-describedby="form-hint"
+      >
+      <button type="submit" class="btn btn--primary">Adicionar</button>
+    </form>
+    <p id="form-hint" class="form-hint" role="status" aria-live="polite"></p>
+
+    <div class="filters" role="group" aria-label="Filtrar tarefas">
+      <button type="button" class="filters__btn" data-filter="all" aria-pressed="true">Todas</button>
+      <button type="button" class="filters__btn" data-filter="pending" aria-pressed="false">Pendentes</button>
+      <button type="button" class="filters__btn" data-filter="done" aria-pressed="false">Concluídas</button>
+    </div>
+
+    <section class="board" aria-label="Lista de tarefas">
+      <ul id="task-list" class="task-list"></ul>
+      <p id="empty-state" class="empty-state" hidden></p>
+    </section>
+
+    <footer class="app__footer">
+      <p id="counter" class="counter" aria-live="polite"></p>
+      <button type="button" id="clear-all" class="btn btn--ghost-danger">Limpar tudo</button>
+    </footer>
+  </main>
+
+  <dialog id="confirm-dialog" class="dialog" aria-labelledby="dialog-title">
+    <form method="dialog">
+      <h2 id="dialog-title" class="dialog__title">Limpar todas as tarefas?</h2>
+      <p class="dialog__text">Isso remove todas as tarefas, pendentes e concluídas. Não dá para desfazer.</p>
+      <div class="dialog__actions">
+        <button type="submit" value="cancel" class="btn btn--ghost">Cancelar</button>
+        <button type="submit" value="confirm" class="btn btn--danger">Limpar tudo</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
