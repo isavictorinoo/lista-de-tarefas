@@ -1,0 +1,516 @@
+/* ==========================================================================
+   Tokens
+   ========================================================================== */
+:root {
+  --bg: #eef1f4;
+  --surface: #ffffff;
+  --surface-sunken: #f4f6f8;
+  --ink: #17212b;
+  --muted: #637080;
+  --line: #dde3e9;
+
+  --accent: #0f766e;
+  --accent-hover: #0b5f58;
+  --accent-ink: #ffffff;
+  --accent-soft: #d9f0ed;
+
+  --danger: #b42318;
+  --danger-hover: #961c12;
+  --danger-soft: #fde8e6;
+  --danger-ink: #ffffff;
+
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+
+  --shadow: 0 1px 2px rgba(23, 33, 43, 0.06), 0 12px 32px rgba(23, 33, 43, 0.08);
+
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1418;
+    --surface: #161f26;
+    --surface-sunken: #111a20;
+    --ink: #e8eef3;
+    --muted: #92a0ad;
+    --line: #26323b;
+
+    --accent: #2dd4bf;
+    --accent-hover: #5eead4;
+    --accent-ink: #06201d;
+    --accent-soft: #12332f;
+
+    --danger: #f97066;
+    --danger-hover: #fda29b;
+    --danger-soft: #3a1b19;
+    --danger-ink: #2a0b08;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: clamp(16px, 5vw, 56px) 16px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+.app {
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: clamp(20px, 5vw, 32px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.app__header {
+  margin-bottom: 24px;
+}
+
+.app__title {
+  margin: 0;
+  font-size: clamp(1.6rem, 5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.app__subtitle {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.app__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.counter {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  line-height: 1.2;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--surface-sunken);
+}
+
+.btn--ghost-danger {
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+
+.btn--ghost-danger:hover:not(:disabled) {
+  background: var(--danger-soft);
+}
+
+.btn--danger {
+  background: var(--danger);
+  color: var(--danger-ink);
+}
+
+.btn--danger:hover:not(:disabled) {
+  background: var(--danger-hover);
+}
+
+.btn--small {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   Formulário de nova tarefa
+   ========================================================================== */
+.task-form {
+  display: flex;
+  gap: 10px;
+}
+
+.task-form__input,
+.edit-input {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 14px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.task-form__input::placeholder {
+  color: var(--muted);
+}
+
+.task-form__input:focus,
+.edit-input:focus {
+  background: var(--surface);
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.task-form__input[aria-invalid="true"],
+.edit-input[aria-invalid="true"] {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px var(--danger-soft);
+}
+
+.form-hint {
+  min-height: 1.4em;
+  margin: 8px 2px 0;
+  color: var(--danger);
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   Filtros
+   ========================================================================== */
+.filters {
+  display: inline-flex;
+  gap: 4px;
+  margin: 8px 0 16px;
+  padding: 4px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.filters__btn {
+  padding: 7px 14px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.filters__btn:hover {
+  color: var(--ink);
+}
+
+.filters__btn[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(23, 33, 43, 0.12);
+}
+
+/* ==========================================================================
+   Lista de tarefas
+   ========================================================================== */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 12px 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.task:hover {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+}
+
+.task--done {
+  background: var(--surface-sunken);
+}
+
+.task__check {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  display: grid;
+  place-content: center;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  background: var(--surface);
+  border: 2px solid var(--muted);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.task__check::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: var(--accent-ink);
+  transform: scale(0);
+  transition: transform 0.12s ease-in-out;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.task__check:hover {
+  border-color: var(--accent);
+}
+
+.task__check:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.task__check:checked::before {
+  transform: scale(1);
+}
+
+.task__text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  user-select: none;
+}
+
+.task--done .task__text {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
+.task__actions {
+  display: flex;
+  flex: none;
+  gap: 2px;
+}
+
+.icon-btn {
+  display: grid;
+  place-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon-btn:hover {
+  background: var(--surface-sunken);
+  color: var(--ink);
+}
+
+.icon-btn--danger:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* Modo de edição */
+.task--editing {
+  padding: 10px;
+  border-color: var(--accent);
+}
+
+.edit-form {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.edit-form .edit-input {
+  flex: 1 1 180px;
+}
+
+.edit-form__actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Estado vazio */
+.empty-state {
+  margin: 0;
+  padding: 28px 16px;
+  background: var(--surface-sunken);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-md);
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Diálogo de confirmação
+   ========================================================================== */
+.dialog {
+  width: min(92vw, 400px);
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+}
+
+.dialog::backdrop {
+  background: rgba(10, 16, 20, 0.55);
+}
+
+.dialog__title {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.dialog__text {
+  margin: 0 0 20px;
+  color: var(--muted);
+}
+
+.dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   Responsivo e movimento reduzido
+   ========================================================================== */
+@media (max-width: 420px) {
+  .task-form {
+    flex-direction: column;
+  }
+
+  .filters {
+    display: flex;
+  }
+
+  .filters__btn {
+    flex: 1;
+    padding-inline: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
